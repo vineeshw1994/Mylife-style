@@ -1,0 +1,176 @@
+<%- include('../layouts.ejs')%>
+
+<div class="container-fluid p-0 min-vh-100" style="margin-top: 8%">
+  <%- include('../partials/adminheader.ejs') %>
+  
+
+  <section >
+    <div class="container">
+      <h3 class="text-center"
+        style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande','Lucida Sans Unicode', Geneva, Verdana, sans-serif; padding: 10px;">Products</h3>
+      <div class="row col-md-12 mt-5 w-100 p-3 justify-content-between">
+        <!-- <div class="pull-right">
+            <a href="/admin/add-product" class="btn btn-success">Add products</a> 
+           </div> -->
+        <div class="col-md-5">
+          <form
+          action="/admin/product-search"
+          method="post"
+          class="d-flex ms-2 me-2"
+          role="search"
+        >
+          <input
+            class="form-control me-2"
+            type="text"
+            placeholder="Search products"
+            id="search"
+            name="search"
+            style="width: 200px;"
+          />
+          <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
+        </div>
+       <div class="col-md-5 ">
+        <span
+        style="
+          background-color: rgb(62, 214, 118);
+          width: 150px;
+          border-radius: 10px;
+          padding: 8px;
+          margin-left: 60%;
+        "
+        ><a href="/admin/add-product" style="list-style-type: none">
+          <button
+            class="btn text-green"
+            type="button"
+            value="Search"
+            style="color: white"
+          >
+            Add-Product
+          </button></a
+        >
+      </span>
+      <% if (locals.nodata) { %>
+        <div class="alert alert-danger">
+          <strong><%= nodata %> </strong>
+        </div>
+        <% } %>
+       </div>
+      </div>
+      
+      
+        <table class="w-100">
+            <thead class="cartTop"
+            style="position: sticky; top: 0; z-index: 1">
+                <tr class="cart_table">
+                    <th class="first p-3 px-4">Name</th>
+                    <th class="p-3">Category</th>
+                    <th class="p-3">Offer</th>
+                    <th class="p-3">Price</th>
+                    <th class="p-3">Real Price</th>
+                    <th class="p-3">Quantity</th>
+                    <th class="p-3">Images</th>
+                    <th class="p-3">Availability</th>
+                    <th class="third p-3">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% product.forEach(element => { %>
+                    <tr id="coupon-">
+                        <td id="pro-body"><%= element.name %></td>
+                        <td id="pro-body"><%= element.category %></td>
+                        <td id="pro-body"><%= element.productOffer %> %</td>
+                        <td id="pro-body"><%= element.price %></td>
+                        <td id="pro-body"><%= element.originalprice %></td>
+                        <td id="pro-body"><%= element.quantity %></td>
+                        <td id="pro-body">
+                            <img style="width: 50px; height: 55px" src="/productImages/<%= element.image[0] %>" alt="<%= element.name %>" />
+                        </td>
+                        <td id="pro-body">
+                            <% if (element.availability === true) { %>
+                                <form action="/admin/p_unlist/<%= element._id %>" method="POST">
+                                    <button class="btn btn-danger btn-sm" type="button" onclick="list(this.form)">Unlist</button>
+                                </form>
+                            <% } else if (element.availability === false) { %>
+                                <form action="/admin/p_list/<%= element._id %>" method="POST">
+                                    <button class="btn btn-success btn-sm" type="button" onclick="unlist(this.form)">List</button>
+                                </form>
+                            <% } %>
+                        </td>
+                        <td id="pro-body">
+                            <a href="/admin/edit-product/<%= element._id %>" class="btn btn-primary btn-sm" title="Edit" data-toggle="tooltip">
+                                <i class="material-icons">&#xE254;</i>
+                            </a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <a href="/admin/view-product"><button class="btn btn-info mt-2">Back</button></a>
+
+        <div class="pagination-container">
+          <ul class="pagination">
+            <% if (locals.currentPage > 1) { %>
+              <li class="+-
+              -+9">
+                <a style="text-decoration: none;" href="?page=<%= currentPage - 1 %>">Prev</a>
+              </li>
+            <% } %>
+              <% for (let i = 1; i <= locals.totalPages; i++) { %>
+                <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                  <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                </li>
+              <% } %>
+            <% if (locals.currentPage < locals.totalPages) { %>
+              <li class="page-item">
+                <a style="text-decoration: none;" href="?page=<%= currentPage + 1 %>">Next</a>
+              </li>
+            <% } %>
+          </ul>
+        </div>
+        
+    </div>
+  </section>
+</div>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+  function list(form) {
+    // swal("Hello world!");
+    swal({
+      title: "Are you sure?",
+      text: "You want to unlist the product!",
+      // icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        form.submit();
+      } 
+    });
+  }
+  function unlist(form) {
+    // swal("Hello world!");
+    swal({
+      title: "Are you sure?",
+      text: "You want to list the product!",
+      // icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        form.submit();
+      } 
+    });
+  }
+</script>
+
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+
+<%- include('../partials/admin-footer.ejs')%>

@@ -1,0 +1,206 @@
+
+<!-- <script>
+    function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit month (add 1 because months are 0-indexed)
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+</script> -->
+<%- include('../../layouts.ejs') %>
+    <div class="container-fluid p-0 min-vh-100" style="margin-top: 6%;">
+        <%-include('../../partials/userheader.ejs') %>
+                            
+            <div class="container ">
+                <div class="row p-4 mb-4">
+                    <div class="container col-lg-3 col-md-3 col-12 p-3 m-0">
+                        <div class="container bg-white profile_left p-5">
+                            <div class="mb-4 d-flex flex-column">
+                                <h6>Manage My Account</h6>
+                                <a href="/profile" class="text-decoration-none">My Profile</a>
+                            </div>
+                            <div class="mb-4 d-flex flex-column">
+                                <h6>My Orders</h6>
+                                <a href="/profile/order" class="text-decoration-none">My Orders</a>
+                                <a href="/profile/orderReturn" class="text-decoration-none">My Return</a>
+                            </div>
+                            <div class="mb-4 d-flex flex-column">
+                                <h6>My Address</h6>
+                                <a href="#" class="text-decoration-none  text-danger">My Address</a>
+                            </div>
+                            <div class="mb-4 d-flex flex-column">
+                                <h6>Money Wallet</h6>
+                                <a href="/profile/wallet" class="text-decoration-none">My Wallet</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container col-lg-9 col-md-9 col-12 py-3 p-0 m-0">
+                        <div class="container-fluid bg-white profile_Right">
+                            <div class="container summary d-flex align-items-center justify-content-between pt-3"
+                                id="product">
+                                <h6 class="p-3 ps-4">My Money Wallet</h6>
+                                <input type="text" placeholder="what are you looking for?" class="text-center"
+                                    id="myOrder">
+                            </div>
+
+
+                           
+
+                            <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="d-flex align-items-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-wallet2" viewBox="0 0 16 16">
+                                    <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484L5.562 3zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z"/>
+                                </svg>
+                                <span class="m-1" style="padding-top: 5px;"><b>Balance:<br>Rs.<%= wallet_Balance%></b></span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="/profile/wallet_history" class="btn btn-primary btn-sm">Wallet History</a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row d-flex justify-content-center text-center py-5">
+                        <div class="col-md-8">
+                            <h6 style="text-align-last: left;">Top-up Balance</h6>
+                            <form class="wallet">
+                                <div class="mb-3">
+                                    <!-- <label for="topupAmount" class="form-label">Amount</label> -->
+                                    <input type="number" class="form-control" name="topUpAmount" id="topupAmount" placeholder="Enter amount" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Top-up</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                        </div>
+                    </div>
+
+                 <div class="container">
+                    <hr class="line bg-dark" />
+                  </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="background-color: rgb(227, 218, 213);">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background-color: rgb(79, 79, 248);">
+        <div class="modal-header d-flex justify-content-between">
+          <h1 class="modal-title fs-5 " id="staticBackdropLabel" style="margin-right: 200px; color: whitesmoke;">Add Money</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: whitesmoke;"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/profile/wallet" method="post" style="border: 2px solid rgb(158, 168, 235); padding: 15px; border-radius: 15px; background-color: rgb(189, 205, 248); width: 100%;">
+            <label for="" id="model-label">Date:</label>
+            <input type="date" id="model-input" name="date"> <br>
+            <label for="" id="model-label">Amount:</label>
+            <input type="number" id="model-input" name="amount"><br>
+            <label for="" id="model-label">Particular:</label>
+            <input type="text" id="model-input" name="Particular"><br>
+            <div class="p-2 d-flex justify-content-around">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width: 100px;">Cancel</button>
+            <button type="submit" class="btn btn-primary" style="width: 100px;">Add</button>
+            </div>
+          </form>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary">Add</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+                </div>
+            </div>
+    </div>
+
+    
+    <%-include('../../partials/foeter.ejs') %>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.wallet').submit(function(e){
+            e.preventDefault();
+
+            var walletAmt=$(this).serialize();
+            console.log(walletAmt);
+            $.ajax({
+                url:"/profile/topup",
+                type:"POST",
+                data:walletAmt,
+                success:function(res){
+                    var options = {
+                        "key": "" + res.key_id + "",
+                        "amount": "" + res.amount + "",
+                        "currency": "INR",
+                        "image": "https://dummyimage.com/600x400/000/fff",
+                        // "handler": function (response) {
+                        //     alert("Payment Succeeded");
+                        //     // window.location.href = '/wallet'
+                        // },
+                        "handler": function (response) {
+                            $.ajax({
+                                url: "/profile/verify-topup",
+                                type: "POST",
+                                data: { topUpAmount: res.topUpAmount },
+                                success: function (response) {
+                                    if (response.success) {
+                                        // alert("Payment Succeeded");
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Wallet Topup Success',
+                                            showConfirmButton: false, // show/hide the "OK" button
+                                            timer: 1500
+                                        });
+                                        // window.location.href = '/orders'; 
+                                        setTimeout(function () {
+                                            window.location.href = '/profile/wallet';
+                                        }, 1500);
+
+                                    } else {
+                                        // alert("Payment failed or something went wrong!");
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Payment failed or something went wrong!',
+                                            showConfirmButton: false, // show/hide the "OK" button
+                                            timer: 10500
+                                        });
+                                    }
+                                }
+                            });
+                        },
+                        "prefill": {
+                            "contact": "" + res.contact + "",
+                            "name": "" + res.name + "",
+                            "email": "" + res.email + ""
+                        },
+                        "theme": {
+                            "color": "#2300a3"
+                        }
+                    };
+                    var razorpayObject = new Razorpay(options);
+                    razorpayObject.on('payment.failed', function (response) {
+                        // alert("Payment Failed");
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Payment failed!',
+                            showConfirmButton: true, // show/hide the "OK" button
+                            timer: 10500
+                        });
+                    });
+                    razorpayObject.open();
+                    // console.log(res.data);
+                }
+            })
+        })
+    })
+</script>

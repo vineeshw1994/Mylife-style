@@ -1,0 +1,175 @@
+<%- include('../layouts.ejs')%>
+
+<div class="container-fluid p-0 " style="margin-top: 10%;">
+    <%- include('../partials/userheader.ejs') %>
+
+<section class="container my-5  pt-3 h-50">
+  <div class="row m-4">
+      <div class="col-1 p-0"></div>
+      <div class="left col-lg-7 col-md-7 col-12 d-flex p-0 justify-content-center">
+          <div class="smal-img-group gap-3 d-flex flex-column ">
+              <div class="smal-img-col">
+                  <img src="/productImages/<%= data.image[1]%>" width="50%" alt=""
+                      class="img-fluid smalImg">
+              </div>
+              <div class="smal-img-col">
+                  <img src="/productImages/<%= data.image[2]%>" width="50%" alt=""
+                      class="img-fluid smalImg">
+              </div>
+              <div class="smal-img-col">
+                  <img src="/productImages/<%= data.image[3]%>" width="50%" alt=""
+                      class="img-fluid smalImg">
+              </div>
+              <div class="smal-img-col">
+                  <img src="/productImages/<%= data.image[4]%>" width="50%" alt=""
+                      class="img-fluid smalImg">
+              </div>
+              <div class="smal-img-col">
+                  <img src="/productImages/<%= data.image[0]%>" width="50%" alt=""
+                      class="img-fluid smalImg">
+              </div>
+          </div>
+          <div class="mian-img col-lg-10 col-md-12 col-12">
+              <img class="img-fluid" width="60% " src="/productImages/<%= data.image[0]%>" alt=""
+                  id="zoom">
+          </div>
+      </div>
+      <div class="right col-lg-4 col-md-4 col-12 gap-3 p-0">
+          <h3 class="mt-2">
+              <%= data.name %>
+          </h3>
+          <div class="ms-auto text-warning">
+            <i class="fa fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+              <span>(150 reviews) &nbsp;| &nbsp;<span class="text-success">Instock</span></span>
+          </div>
+          <h2 class="mt-2 d-flex">
+              <span class="text-dark">
+                  <h2>₹ <%= price%> &nbsp; </h2>
+              </span>
+              &nbsp;&nbsp; 
+                  <span class="mt-2" style="text-decoration: line-through; color: #9a9a9a; font-size:20px;">₹ <%= data.originalprice
+                    %></span> 
+                  &nbsp;
+                  <span class="text-success">
+                  <h2><%= data.productOffer%>% off</h2>
+              </span>
+          </h2>
+          <div class="pt-2">
+              <p class="text-Description">
+                  <%= data.discription %>
+              </p>
+          </div>
+          <div class="mt-4" style="width:95%">
+              <hr class="line bg-dark">
+          </div>
+          <div class="d-flex p_Cart_Buy gap-4 pt-2">
+             
+            <%if(user){%>
+                <form action="" method="get" id="WhishList">
+                    <input type="hidden" value="<%= data._id%>" id="whishlistProductId">
+                    <button type="submit" class="btn btn-warning text-white px-5 p-2" style="font-size: 13px;">
+                        Add to Whishlist
+                    </button>
+                </form>
+                <form action="" method="post" id="CartForm">
+                    <input type="hidden" value="<%= data._id%>" id="cartProductId">
+                    <button type="submit" class="btn btn-danger text-white px-5 p-2"
+                        style="font-size: 13px;" id="addtoCart">Add to Cart</button>
+                </form>
+            <%}else{%>
+                <form action="/login" method="get">
+                    <input type="hidden" value="<%= data._id%>" id="whishlistProductId">
+                    <button type="submit" class="btn btn-warning text-white px-3 p-2" style="font-size: 13px;">
+                        Add to Whishlist
+                    </button>
+                </form>
+                <form action="/login" method="get">
+                    <input type="hidden" value="<%= data._id%>" id="cartProductId">
+                    <button type="submit" class="btn btn-danger text-white px-2 p-2"
+                        style="font-size: 13px;" id="addtoCart">Add to Cart</button>
+                </form>
+            <%}%>
+             
+          </div>
+          <p class="text-success fw-bold mt-4 " id="CartSuccMsg"></p>
+          <div class="pt-3">
+              <div class="border border-dark p_Delivery_Border" style="max-width: 350px;">
+                  <div class="d-flex align-items-center p-3 gap-3">
+                      <img class="img-fluid" src="/assets/images/icon-delivery.png" alt=""
+                          style="width:40px">
+                      <h6>Free Delivery</h6>
+                  </div>
+                  <hr class="p-0 m-0 bg-dark">
+                  <div class="d-flex align-items-center p-3 gap-3">
+                      <img class="img-fluid" src="/assets/images/Icon-return.png" alt=""
+                          style="width:40px">
+                      <h6>Return Delivery</h6>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="pt-5">
+      <hr class="bg-dark m-0 p-0">
+  </div>
+  
+</div>
+</section>
+</div>
+
+<script src="/zoom/zoom.js"></script>
+<script src="/zoom/zoomsl.min.js"></script>
+<script src="/javascripts/P_Image.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('CartForm');
+      const succMsg = document.getElementById('CartSuccMsg');
+      const cartItemCount = document.getElementById('cartItemCount');
+      form.addEventListener('submit', (event) => {
+          event.preventDefault();
+          $.ajax({
+              type: 'post',
+              url: '/cart/<%= data._id%>',
+              success: function (res) {
+                  succMsg.textContent = "Product Successfully Added Your Cart"
+                  setTimeout(() => {
+                     succMsg.style.display = 'none';
+                     }, 2000);
+                  const currentCount = parseInt(cartItemCount.textContent) || 0;
+                  const newCount = currentCount + 1;
+                  cartItemCount.textContent = newCount;
+              }
+          })
+
+      })
+  })
+</script> 
+<script>
+  const form = document.getElementById('WhishList');
+  const whishlistSuccMsg = document.getElementById('CartSuccMsg');
+  form.addEventListener('submit',(event)=>{
+      event.preventDefault();
+  $.ajax({
+     url: '/wishlist/<%= data._id%>',
+     type:'post',
+     success:function (res){
+      if(res == "Already Existe"){
+          whishlistSuccMsg.innerText = "Product Already Existe In The WhishList"
+      }else{
+          whishlistSuccMsg.innerText = "Product Successfully Added"
+          setTimeout(() => {
+                     whishlistSuccMsg.style.display = 'none';
+                     }, 2000);
+      }
+      
+     }
+  })
+  })
+</script>
+
+<%- include("../partials/foeter.ejs")%>

@@ -1,0 +1,133 @@
+<%- include('../layouts.ejs')%>
+
+
+<div class="container-fluid p-0 min-vh-100" style="margin-top: 8%;">
+  <%- include('../partials/adminheader.ejs') %>
+
+  <div class="container">
+    <div class="row">
+        <div class="table-responsive" id="user-tab">
+          <div class="table-wrapper">
+            <div class="table-title" >
+              <div class="row">
+                <div class="col-sm-8 text-center pb-4">
+                  <h2>Users Details</h2>
+                </div>
+                <form
+                  action="/admin/user-search"
+                  method="post"
+                  class="d-flex ms-2 me-2 mt-3"
+                  role="search"
+                >
+                  <input
+                    class="form-control me-2 w-25"
+                    type="text"
+                    placeholder="Search User name"
+                    id="search"
+                    name="search"
+                  />
+                  <button class="btn btn-outline-primary" type="submit">
+                    Search
+                  </button>
+                </form>
+              </div>
+            </div>
+            <% if (locals.nodata) { %>
+            <div class="alert alert-danger">
+              <strong><%= nodata %> </strong>
+            </div>
+            <% } %>
+            <table class="w-100">
+              <thead  class="cartTop"
+              style="position: sticky; top: 0; z-index: 1">
+                <tr class="cart_table">
+                  <th class="first p-3 px-4">Name</th>
+                  <th class="p-3">Phone</th>
+                  <th class="p-3">Email</th>
+                  <th class="third p-3">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% userdata.forEach(element => { %>
+                <tr id="coupon-">
+                  <td  scope="col" class="px-4"><%= element.name %></td>
+                  <td  scope="col" class="px-4"><%= element.mobile %></td>
+                  <td  scope="col" class="px-4"><%= element.email %></td>
+                  <td
+                    scope="col"
+
+                    class="TableButton align-items-center  d-flex flex-column gap-2 px-5 p-2"
+                    
+                  >
+                    <% if(element.isblocked===false) { %>
+                    <form
+                      action="/admin/user-blocking?id=<%= element._id %>"
+                      method="post"
+                    >
+                      <button class="btn btn-danger text-black" type="button"  onclick="block_user(this.form)">
+                        Block
+                      </button>
+                    </form>
+                    <% } else if(element.isblocked===true) { %>
+                    <form
+                      action="/admin/user-unblocking?id=<%= element._id %>"
+                      method="post"
+                    >
+                      <button class="btn btn-success text-white" type="button"  onclick="unblock_user(this.form)">
+                        UnBlock
+                      </button>
+                    </form>
+                    <% } %>
+                  </td>
+                </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+  function block_user(form) {
+    // swal("Hello world!");
+    swal({
+      title: "Are you sure?",
+      text: "You want Block user!",
+      // icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        form.submit();
+      }
+    });
+  }
+
+  function unblock_user(form) {
+    // swal("Hello world!");
+    swal({
+      title: "Are you sure?",
+      text: "You want UnBlock user!",
+      // icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        form.submit();
+      }
+    });
+  }
+</script>
+
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+
+<%- include('../partials/admin-footer.ejs')%>

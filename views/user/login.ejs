@@ -1,0 +1,74 @@
+<%- include('../layouts.ejs')%>
+
+<section class="vh-100">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg?size=626&ext=jpg"
+          class="img-fluid" alt="Sample image">
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+        <form id="login-Form" action="/login" method="post">
+          <div class="divider d-flex align-items-center my-4">
+            <h3 class="text-center text-info fw-bold">Login</h3>
+          </div>
+
+          <% if (locals.errmsg) { %>
+              <div class="alert alert-danger">
+                <strong><%= errmsg %> </strong>
+              </div>
+            <% } %> 
+            <% if (locals.blockmsg) { %>
+              <div class="alert alert-danger">
+                <strong><%= blockmsg %> </strong>
+              </div>
+            <% } %> 
+            
+
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+              <div class="error text-danger" style="background-color: rgb(244, 241, 238); border-radius: 5px; font-size: 15px;" ></div>
+            <input type="email" id="email" class="form-control form-control-lg"
+              placeholder="Enter a valid email address" name="Email" />
+            <label class="form-label" for="form3Example3">Email address</label>
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-3">
+              <div class="error text-danger" style="background-color: rgb(244, 241, 238); border-radius: 5px; font-size: 15px;" ></div>
+            <input type="password" id="password" class="form-control form-control-lg"
+              placeholder="Enter password" name="Password" />
+            <label class="form-label" for="form3Example4">Password</label>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="/forgotPassword" class="text-body">Forgot password?</a>
+          </div>
+
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button type="submit" id="supmit" class="btn btn-primary btn-lg"
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+            <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/signup"
+                class="link-danger">Register</a></p>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <div
+    class=" py-4 px-4 px-xl-5 bg-primary">
+    <!-- Copyright --> 
+    <div class="text-white text-center mb-3 mb-md-0">
+      Copyright © 2024. All rights reserved.
+    </div>
+    </div>
+    <!-- Copyright -->
+
+    <!-- Right -->
+    
+    <!-- Right -->
+  </div>
+</section>
+
+<script src="/javascripts/login.js"></script>

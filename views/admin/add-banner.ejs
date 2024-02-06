@@ -1,0 +1,59 @@
+<%- include('../layouts.ejs')%>
+
+<div class="container-fluid p-0 min-vh-100" style="margin-top: 10%">
+    <%- include('../partials/adminheader.ejs') %>
+    <div class="container col-md-6" style="background-color: rgb(123, 144, 189);border-radius: 15px;" >
+      
+
+        <form class="" method="POST" action="/admin/banners" enctype="multipart/form-data" style="background-color: rgb(123, 144, 189); padding: 10px;" >
+
+            <h3 class="fw-normal mb-3 pb-3 text-center" style="letter-spacing: 1px;">Add Banners
+            </h3>
+            <% if (locals.msg) { %>
+                <div class="alert alert-success">
+                  <strong><%= msg %> </strong>
+                </div>
+              <% } %> 
+
+            <div class="form-outline mb-4 row">
+                <div class="col-md-12">  
+                  <label class="form-label" for="name">Banner Name</label>
+                    <input type="categoryName"  id="categoryName" name="name"
+                        class="form-control form-control-md" />
+                        <div class="error text-danger"></div>
+                       </div> 
+              
+            </div>
+
+            <div class="form-outline mb-4 row">
+                <div class="col-md-12">
+                    <label class="form-label" for="description">Description</label>
+                <input type="text" name="discription" class="form-control form-control-md" id="discription">
+                <div class="error text-danger"></div>
+              </div>
+               
+            </div>
+            <div class="form-outline mb-4 row">
+                <!-- <input type="isAvailable" required id="isAvailable" name="isAvailable"
+                    class="form-control form-control-lg" /> -->
+                    <div class="col-md-12">
+                        <label class="form-label" for="">Image</label><br>
+                        <input type="file" name="image" id="formFileMultiple" class="form-control">
+                       
+                    </div>
+
+                
+            </div>
+
+            <div class="pt-1 mb-2 row">
+                <div class="col-md-12 text-center">
+                    <button class="btn btn-dark btn-lg btn-block  mx-auto"  type="submit">Create</button>  
+
+                </div>
+            </div>
+            
+        </form>
+    
+</div>
+
+</div>

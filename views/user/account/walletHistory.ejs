@@ -1,0 +1,61 @@
+<div class="container-fluid p-0 min-vh-100" style="margin-top: 8%;">
+    <%-include('../../partials/userheader.ejs') %>
+    <div class="container ">
+        <div class="row p-4 mb-4">
+
+    <div class="container col-lg-3 col-md-3 col-12 p-3 m-0">
+        <div class="container bg-white profile_left p-5">
+            <div class="mb-4 d-flex flex-column">
+                <h6>Manage My Account</h6>
+                <a href="/profile" class="text-decoration-none">My Profile</a>
+            </div>
+            <div class="mb-4 d-flex flex-column">
+                <h6>My Orders</h6>
+                <a href="/profile/order" class="text-decoration-none">My Orders</a>
+                <a href="/profile/orderReturn" class="text-decoration-none">My Return</a>
+            </div>
+            <div class="mb-4 d-flex flex-column">
+                <h6>My Address</h6>
+                <a href="#" class="text-decoration-none  text-danger">My Address</a>
+            </div>
+            <div class="mb-4 d-flex flex-column">
+                <h6>Money Wallet</h6>
+                <a href="/profile/wallet" class="text-decoration-none">My Wallet</a>
+            </div>
+        </div>
+    </div>
+<div class="container col-lg-9 col-md-9 col-12 py-3 p-0 m-0">
+    <h1 class="mb-4">Wallet History</h1>
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Process</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Loop through wallet history transactions -->
+                        <% for (const history of userDetails[0].wallethistory) { %>
+                            <tr>
+                                <td><%= history.process %></td>
+                                <td class="<%= (history.process === 'TopUp' || history.process === 'Refund') ? 'text-success' : 'text-danger' %>">
+                                    <span><%= (history.process === 'TopUp' || history.process === 'Refund') ? '+' : '-'%> <strong><%= history.amount %></strong>
+                                </td>
+                                <td><%= history.date.toLocaleString() %></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+</div>
+</div>
+</div>

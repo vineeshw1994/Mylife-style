@@ -1,0 +1,70 @@
+<%- include('../layouts.ejs')%>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- Bootstrap JavaScript and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    // Get the current URL path and remove the leading slash
+    var path = window.location.pathname.substr(1);
+
+    // Add active class to the corresponding navigation link
+    $('.nav-link').each(function() {
+      var href = $(this).attr('href');
+      if (path === href) {
+        $(this).addClass('active');
+      }
+    });
+  });
+</script>
+
+
+<nav class="navbar navbar-expand-lg navbar-light rounded" style="z-index: 10; position: fixed; background-color: rgb(217, 230, 229);">
+  <div class="container">
+    <a class="navbar-brand" id="logo" href="#">E-shop</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/admin/dashboard">Dashboard</a>
+        </li>
+        <!-- Add the "active" class to the selected button -->
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/admin/view-product">Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/category">Categories</a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/users" class="nav-link">Users</a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/order" class="nav-link">Orders</a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/coupons" class="nav-link">Coupon</a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/banners" class="nav-link">Banners</a>
+        </li>
+      </ul>
+      <% if(admin){%>
+      <div class="col-lg-3 col-md-6 col-sm-12">
+        <a href="/admin/login"><button class="btn btn-info">Login</button></a>
+      </div>
+      <%}else {%>
+      <div class="col-lg-3 col-md-6 col-sm-12">
+        <a href="/admin/signout"><button class="btn btn-info">Signout</button></a>
+      </div>
+      <%}%>
+    </div>
+  </div>
+</nav>

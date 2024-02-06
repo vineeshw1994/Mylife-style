@@ -1,0 +1,204 @@
+<%- include('../layouts.ejs')%>
+
+
+<div class="container-fluid p-0 min-vh-100" style="margin-top: 10%;;">
+  <%- include('../partials/adminheader.ejs') %>
+
+<div class="container col-md-6" style="background-color: rgb(123, 144, 189);border-radius: 15px;" >
+      
+
+            <form class="" method="POST" action="/admin/create-category" style="background-color: rgb(123, 144, 189); padding: 10px;" >
+
+                <h3 class="fw-normal mb-3 pb-3 text-center style="letter-spacing: 1px;" >Add Category
+                </h3>
+                <% if (locals.msg) { %>
+                    <div class="alert alert-success">
+                      <strong><%= msg %> </strong>
+                    </div>
+                  <% } %> 
+
+                <div class="form-outline mb-4 row">
+                    <div class="col-md-12">  
+                      <label class="form-label" for="name">Category Name</label>
+                        <input type="categoryName"  id="categoryName" name="categoryName"
+                            class="form-control form-control-md" />
+                            <div class="error text-danger"></div>
+                            <% if (locals.errmsg) { %>
+                                <div class="alert alert-danger">
+                                  <strong><%= errmsg %> </strong>
+                                </div>
+                              <% } %> </div>
+                  
+                </div>
+
+                <div class="form-outline mb-4 row">
+                    <div class="col-md-12">
+                        <label class="form-label" for="description">Description</label>
+                    <input type="text" name="discription" class="form-control form-control-md" id="discription">
+                    <div class="error text-danger"></div>
+                  </div>
+                   
+                </div>
+                <div class="form-outline mb-4 row">
+                    <!-- <input type="isAvailable" required id="isAvailable" name="isAvailable"
+                        class="form-control form-control-lg" /> -->
+                        <div class="col-md-12">
+                            <label class="form-label" for="isAvailable">isAvailable</label><br>
+                        <input type="radio" id="Yes" name="fav_language" value="true" >
+                        <label for="Yes">Yes</label><br>
+                        <input type="radio" id="No" name="fav_language" value="false">
+                        <label for="No">No</label><br>
+                        <div class="error text-danger"></div>
+                        </div>
+
+                    
+                </div>
+
+                <div class="pt-1 mb-2 row">
+                    <div class="col-md-12 text-center">
+                        <button class="btn btn-dark btn-lg btn-block  mx-auto"  type="submit">Create</button>  
+
+                    </div>
+                </div>
+                
+            </form>
+        
+</div>
+</section>
+
+</div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const form = document.querySelector("form");
+      const categoryNameInput = document.getElementById("categoryName");
+      const descriptionInput = document.getElementById("discription");
+      const isAvailableInputs = document.querySelectorAll("[name=fav_language]");
+      const errorElements = document.querySelectorAll(".error");
+      
+      form.addEventListener("submit", function (event) {
+          let isValid = true;
+          
+          // Clear previous error messages
+          errorElements.forEach(element => {
+              element.textContent = "";
+          });
+          
+          // Validate Category Name
+          if (categoryNameInput.value.trim() === "") {
+              errorElements[0].textContent = "Category Name is required.";
+              isValid = false;
+          }
+          
+          // Validate Description
+          if (descriptionInput.value.trim() === "") {
+              errorElements[1].textContent = "Description is required.";
+              isValid = false;
+          }
+          
+          // Validate isAvailable
+          let isAvailableSelected = false;
+          isAvailableInputs.forEach(input => {
+              if (input.checked) {
+                  isAvailableSelected = true;
+              }
+          });
+          if (!isAvailableSelected) {
+              errorElements[2].textContent = "Please select availability.";
+              isValid = false;
+          }
+          
+          if (!isValid) {
+              event.preventDefault(); // Prevent form submission if there are errors
+          }
+      });
+  });
+</script>
+
+
+<!-- <script>
+  // login submission validation
+
+//submission
+const c_Name = document.querySelector('#categoryName')
+const discription = document.querySelector('#discription');
+const Yes = document.querySelector('#Yes');
+const no = document.querySelector('#No');
+
+//  {{!-- const successMessage = document.getElementById("login-success-message");
+// successMessage.classList.remove("hidden");
+//  setTimeout(function() {
+//   successMessage.classList.add("hidden");
+// }, 3000); --}}
+
+form.addEventListener('sub',(e)=>{
+
+if(!validateInputs()){
+   e.preventDefault();
+}
+})
+
+function validateInputs(){
+const name = c_Name.value.trim()
+const discription = discription.value.trim();
+const yes = Yes.value.trim()
+const no = No.value.trim()
+let success = true
+
+if(name === ''){
+   success=false;
+   setError(c_Name,'category name is required')
+} 
+else{
+   setSuccess(c_Name)
+}
+
+
+if(discription === ''){
+   success= false;
+   setError(discription,'discreption is required')
+}
+
+else{
+   setSuccess(discription)
+}
+
+if(yes === ''){
+   success= false;
+   setError(Yes,'avilability is required')
+}
+
+else{
+   setSuccess(Yes)
+}
+
+return success;
+
+}
+
+
+function setError(element,message){
+const inputGroup = element.parentElement;
+const errorElement = inputGroup.querySelector('.error')
+
+errorElement.innerText = message;
+inputGroup.classList.add('error')
+inputGroup.classList.remove('success')
+}
+
+function setSuccess(element){
+const inputGroup = element.parentElement;
+const errorElement = inputGroup.querySelector('.error')
+
+errorElement.innerText = '';
+inputGroup.classList.add('success')
+inputGroup.classList.remove('error')
+}
+
+
+
+</script> -->
+
+
+

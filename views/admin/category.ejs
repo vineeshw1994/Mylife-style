@@ -1,0 +1,125 @@
+<%- include('../layouts.ejs')%>
+
+<div class="container-fluid p-0 min-vh-100" style="margin-top: 8%">
+  <%- include('../partials/adminheader.ejs') %>
+
+  <div class="container-lg">
+    <div class="table-responsive">
+      <div class="table-wrapper">
+        <div class="table-title">
+          <div class="row">
+            <h2 class="p-3 text-center" style="font-size: 22px;">Categories</h2>
+
+            <div class="col-sm-8">
+            </div>
+          </div>
+          <div style="margin-left: 85%;">
+            <a href="/admin/create-category"
+              ><button class="" type="button " value="Search" style="background-color: rgb(95, 97, 238);; border-radius: 10px; padding: 5px; border: none; color: whitesmoke;" >
+                Add-Categoery
+              </button></a
+            >
+          </div>
+        </div>
+        <table class="w-100">
+          <thead class="cartTop" style="position: sticky; top: 0; z-index: 1">
+            <tr class="cart_table">
+              <th class="first p-3 px-4">Name</th>
+              <th class="p-3">Discription</th>
+              <th class="p-3">Availability</th>
+              <th class="third p-3">Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% data.forEach(element => {%>
+            <tr id="coupon-">
+              <td  scope="col" class="px-4"><%= element.categoryName %></td>
+              <td  scope="col" class="px-4"><%= element. categoryDescription %></td>
+              <td  scope="col" class="px-4">
+                <% if (element.isavilable === true) { %>
+                <form
+                  action="/admin/unlistCategory/<%= element._id %>"
+                  method="POST"
+                >
+                  <button
+                    class="btn btn-danger m-2 text"
+                    type="button"
+                    onclick="list(this.form)"
+                  >
+                    Unlist
+                  </button>
+                </form>
+                <% } else if (element.isavilable === false) { %>
+                <form
+                  action="/admin/listCategory/<%= element._id %>"
+                  method="POST"
+                >
+                  <button
+                    class="btn btn-success m-2 text"
+                    type="button"
+                    onclick="unlist(this.form)"
+                  >
+                    List
+                  </button>
+                </form>
+                <% } %>
+              </td>
+              <td >
+                <a
+                  href="/admin/edit-category?id=<%= element._id %>"
+                  class="edit"
+                  title="Edit"
+                  data-toggle="tooltip"
+                  ><i class="material-icons">&#xE254;</i></a
+                >
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+  function list(form) {
+    // swal("Hello world!");
+    swal({
+      title: "Are you sure?",
+      text: "You want to list the category!",
+      // icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        form.submit();
+      }
+    });
+  }
+
+  function unlist(form) {
+    // swal("Hello world!");
+    swal({
+      title: "Are you sure?",
+      text: "You want to unlist the category!",
+      // icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        form.submit();
+      }
+    });
+  }
+</script>
+
+<script>
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+
+<%- include('../partials/admin-footer.ejs')%>

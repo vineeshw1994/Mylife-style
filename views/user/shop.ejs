@@ -1,0 +1,160 @@
+<!-- --include header-- -->
+<%- include("../layouts.ejs")%>
+<div class="container-fluid p-0 min-vh-100" style="margin-top: 11%;">
+  <%- include("../partials/userheader.ejs")%>
+    <!-- /header -->
+
+    <div class="container mb-5 ">
+      <div class="row">
+
+        <!-- BEGIN FILTERS -->
+        <div class="col-md-3 pt-3">
+          <h3 class="grid-title large text-danger"><i class="fa fa-filter fa-xs text-danger"></i> Filters</h3>
+          <hr>
+
+          <!-- BEGIN FILTER BY CATEGORY -->
+          <h4>By category:</h4>
+
+            <div class="px-2 pt-2 filterFont" style="max-height: 150px; overflow-y: auto;">
+              <!-- <form action="/filter" method="post">
+                <select class="form-select" name="category" id="category" aria-label="Default select example">
+                    <% category.forEach((category) => { %>
+                        <option value="<%= category.categoryName %>"><%= category.categoryName %></option>
+                    <% }) %>
+                </select>
+
+                <div class="container filterCo">
+                  <H5>CATEGORIES PRICE</H5>
+                  <div class=" pt-2 filterFont" style="max-height: 150px; overflow-y: auto;">
+                      <select id="sortSelect" name="sortOption" >
+                          <option value="heighToLow">Heigher To Lower</option>
+                          <option value="lowToHigh">Lower To Heigher</option>
+                      </select>
+                  </div>
+              </div>
+              <button type="submit" class="btn  w-100" style="background-color: rgb(239, 96, 96); margin-top: 10px;">Filter</button>
+            </form> -->
+
+            <form action="/filter" method="post">
+              <select class="form-select" name="category" id="category" aria-label="Default select example">
+                  <option value="" disabled selected>Select a category</option>
+                  <% category.forEach((category) => { %>
+                      <option value="<%= category.categoryName %>"><%= category.categoryName %></option>
+                  <% }) %>
+              </select>
+          
+              <div class="container filterCo">
+                  <H5>CATEGORIES PRICE</H5>
+                  <div class="pt-2 filterFont" style="max-height: 150px; overflow-y: auto;">
+                      <select id="sortSelect" name="sortOption" >
+                        <option value="" disabled selected>Price category</option>
+                          <option value="HeighToLow">Higher To Lower</option>
+                          <option value="LowToHigh">Lower To Higher</option>
+                      </select>
+                  </div>
+              </div>
+              <button type="submit" class="btn  w-100" style="background-color: rgb(239, 96, 96); margin-top: 10px;">Filter</button>
+          </form>
+          
+
+
+            </div>
+
+
+        </div>
+        <!-- END FILTERS -->
+        <!-- BEGIN RESULT -->
+        <div class="col-md-9">
+
+          <div class="container">
+            <!-- line -->
+            <div class="container">
+              <hr class="line bg-dark">
+            </div>
+            <section style="background-color: #f8f9fa;">
+              <div class="text-center container py-0">
+               
+                <h4 class="mt-0 " style="font-weight: 600; padding: 5px;"> <%=locals.cat_name%> products / <%=locals.priceRange%> <%=locals.sortFilter%></h4>
+
+                <div class="col-md-11 col-12 container px-4 d-flex flex-column align-items-start justify-content-between">
+                  <div id="product-container" class="row d-flex align-items-start justify-content-start">
+                      <% products.forEach((data,index)=>{%>
+                          <div class="container bg-white ProductCard m-2" style="width: 200px;height: 250px;"
+                              data-category-id="<%= data.categoryId %>">
+                              <!-- image rendering  -->
+                              <a href="/product-view/<%=data._id%>">
+                                  <div class="cardImage mb-2 d-flex align-items-center justify-content-center">
+                                      <img src="/productImages/<%=data.image[0]%>" alt="Product Image" style="height: 100px;width: 120px;">
+                                  </div>
+                              </a>
+                              <div class="px-3 product-name">
+                                  <span class="text-dark">
+                                      <%= data.name%>
+                                  </span>
+                                  <div class="p_price d-flex justify-content-between">
+                                      <div class="price text-danger">₹ <text>
+                                              <%= data.price%>
+                                          </text> &nbsp; <span>₹ <%=data.originalprice%></span></div>
+                                      <div class="favor" style="cursor: pointer;">
+                                          <i class="fa-regular fa-heart"></i>
+                                      </div>
+                                  </div>
+                                  <div class="rating d-flex align-items-center">
+                                      <div class="star d-flex align-items-center">
+                                          <img src="/assets/product/star.png" alt="">
+                                          <img src="/assets/product/star.png" alt="">
+                                          <img src="/assets/product/star.png" alt="">
+                                          <img src="/assets/product/star.png" alt="">
+                                          <img src="/assets/product/star.png" alt="">
+                                      </div>
+                                      <div class="value ms-2">(75)</div>
+                                  </div>
+                              </div>
+                          </div>
+                      <%})%>
+                  </div>
+              </div>
+            </section>
+          </div>
+         
+          <!-- PAGINATION END -->
+          <div class="pagination-container">
+            <ul class="pagination">
+              <% if (locals.currentPage > 1) { %>
+                <li class="+-
+                -+9">
+                  <a style="text-decoration: none;" href="?page=<%= currentPage - 1 %>">Prev</a>
+                </li>
+              <% } %>
+                <% for (let i = 1; i <= locals.totalPages; i++) { %>
+                  <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                    <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                  </li>
+                <% } %>
+              <% if (locals.currentPage < locals.totalPages) { %>
+                <li class="page-item">
+                  <a style="text-decoration: none;" href="?page=<%= currentPage + 1 %>">Next</a>
+                </li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      </div>
+      
+      
+      <script>
+        function navigateToSelectedRoute() {
+            var selectElement = document.getElementById("category");
+            var selectedValue = selectElement.value;
+            if (selectedValue) {
+                window.location.href = "category/" + selectedValue; // Replace with your actual route pattern
+            }
+        }
+    </script>
+
+
+      <!-- --include footer-- -->
+      <%- include("../partials/foeter.ejs")%>
+        <!-- /footer -->

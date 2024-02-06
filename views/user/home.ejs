@@ -1,0 +1,296 @@
+
+
+  <%- include('../layouts.ejs') %>
+<div class="container-fluid  min-vh-100" style="margin-top:0%; background-color: rgba(232, 230, 197, 0.726);">
+  <%- include('../partials/userheader.ejs') %>
+
+
+  <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel" data-bs-interval="2000">
+    <div class="carousel-inner">
+      <% bannerData.forEach((data, index) => { %>
+        <div class="carousel-item w-100 <%= index === 0 ? 'active' : '' %>">
+          <img style="width: 100%; height: 400px; padding: 5px; border-radius: 50px;" src="/banner/<%= data.image %>" alt="<%= data.name %>" />
+          <!-- <div class="carousel-caption" style="margin-bottom: 350px;">
+            Add your text elements here
+            <h1>hello man</h1>
+            <p>hi man this is  onam offers</p>
+            You can style the text elements using CSS as needed
+          </div> -->
+        </div>
+      <% }); %>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  
+  
+
+  <div class="container">
+    <!-- line -->
+    <div class="container">
+      <hr class="line bg-dark" />
+    </div>
+
+    <!-- banner -->
+    <div class="container">
+      <a href="#"
+        ><img
+          src="/assets/banners/banner4.jpg"
+          alt=""
+          class="img-fluid  bannerImage"
+      /></a>
+    </div>
+
+
+    <!-- line -->
+    <div class="container">
+      <hr class="line bg-dark" />
+    </div>
+  </div>
+
+  <div class="container d-flex p-3 justify-content-between">
+    <div class="textHeading fw-bold fs-4"> All Products</div>
+    <a href="/shop"><button class="productviewButton">View All Products</button></a>
+  </div>
+
+  <!-- Product Container -->
+  
+  <section class="product container p-0">
+    <button class="pre-btn"><img class="pre-btn-img" src="/assets/images/arrow.png" alt=""></button>
+    <button class="nxt-btn"><img class="pre-btn-img" src="/assets/images/arrow.png" alt=""></button>
+    <div class="product-container w-100">
+        <% products.forEach((product,index)=>{ %>
+            <div class="product-card ">
+                <div class="product-image">
+                    <span class="discount-tag"><%= product. productOffer %>% off</span>
+
+                        <img src="/productImages/<%=product.image[0] %>" class="product-thumb" alt="">
+                    <a href="/product-view/<%= product._id%>"><button class="card-btn">View Product</button></a>
+                </div>
+                <div class="product-info ">
+                    <h2 class="product-brand product-name"><%= product.name %></h2>
+                    <span class="price text-danger">₹ <%= product.price %></span><span class="actual-price">₹ <%= product.originalprice %></span>
+                    <div class="rating d-flex align-items-center">
+                        <div class="star d-flex align-items-center text-warning">
+                            <i class="fa fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="value ms-2">(75)</div>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+    </div>
+</section>
+
+<!-- line -->
+<div class="container">
+  <hr class="line bg-dark" />
+</div>
+
+<section class="product container p-0">
+  <button class="pre-btn"><img class="pre-btn-img" src="/assets/images/arrow.png" alt=""></button>
+  <button class="nxt-btn"><img class="pre-btn-img" src="/assets/images/arrow.png" alt=""></button>
+  <div class="product-container w-100">
+      <% product.forEach((product,index)=>{ %>
+          <div class="product-card ">
+              <div class="product-image">
+                  <span class="discount-tag"><%= product. productOffer %>% off</span>
+
+                      <img src="/productImages/<%=product.image[0] %>" class="product-thumb" alt="">
+                  <a href="/product-view/<%= product._id%>"><button class="card-btn">View Product</button></a>
+              </div>
+              <div class="product-info ">
+                  <h2 class="product-brand product-name"><%= product.name %></h2>
+                  <span class="price text-danger">₹ <%= product.price %></span><span class="actual-price">₹ <%= product.originalprice %></span>
+                  <div class="rating d-flex align-items-center">
+                      <div class="star d-flex align-items-center text-warning">
+                          <i class="fa fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star-half-alt"></i>
+                      </div>
+                      <div class="value ms-2">(75)</div>
+                  </div>
+              </div>
+          </div>
+          <% }); %>
+  </div>
+</section>
+
+<div class="container">
+  <hr class="line bg-dark" />
+</div>
+
+<div class="container-fluid">
+  <img src="/assets/banners/special offers image.jpg" alt="Special offers" style="border-radius: 20px;height: 300px; width: 100%;">
+</div>
+
+
+<div style="background-color: rgb(220, 240, 210); height: 70px; border-radius: 10px; padding: 10px; text-align: center;">
+  <h2>Special Offers</h2>
+</div>
+<div class="container">
+  <!-- line -->
+  <div class="container">
+    <hr class="line bg-dark" />
+  </div>
+
+  <div class="owl-carousel owl-theme">
+
+    <% product.forEach((product,index)=>{ %>
+
+     <div class="" style="width: 145px; height: 400px;">
+              <div class="">
+      <div class="">
+          <span class="discount-tag"><%= product.productOffer %>% off</span>
+
+             
+          <a href="/product-view/<%= product._id%>"> <img src="/productImages/<%=product.image[0] %>" class="product-thumb" alt=""  id="small-carosual" style="width: 200px; height: 250px; box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;"></a>
+      </div>
+      <div class="product-info ">
+          <h2 class="product-brand product-name"><%= product.name %></h2>
+          <span class="price text-danger">₹ <%= product.price %></span><span class="actual-price">₹ <%= product.originalprice %></span>
+          <div class="rating d-flex align-items-center">
+              <div class="star d-flex align-items-center text-warning">
+                  <i class="fa fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+              </div>
+              <div class="value ms-2">(75)</div>
+          </div>
+      </div>
+    </div>
+  </div>
+  
+  <% }); %>
+</div>
+
+<div class="container">
+  <!-- line -->
+  <div class="container">
+    <hr class="line bg-dark" />
+  </div>
+  <!-- Service Card -->
+  <div
+    class="container p-3 mt-4 mb-2"
+    style="background-color: rgb(249, 229, 203)"
+  >
+    <div class="row serviceCard border p-3">
+      <div
+        class="col-lg-4 delivery d-flex flex-column align-items-center justify-content-center"
+      >
+        <div>
+          <img
+            src="/assets/images/Services.png"
+            alt=""
+            class="img-fluid pb-3"
+            style="width: 60px"
+          />
+        </div>
+        <span class="fw-bold">FREE AND FAST DELIVERY</span>
+        <p style="font-size: 12px">Free delivery for all orders over $140</p>
+      </div>
+      <div
+        class="col-lg-4 coustomer d-flex flex-column align-items-center justify-content-center"
+      >
+        <div>
+          <img
+            src="/assets/images/Services2.png"
+            alt=""
+            class="img-fluid pb-3"
+            style="width: 60px"
+          />
+        </div>
+        <span class="fw-bold">FREE AND FAST DELIVERY</span>
+        <p style="font-size: 12px">Free delivery for all orders over $140</p>
+      </div>
+      <div
+        class="col-lg-4 guaranty d-flex flex-column align-items-center justify-content-center"
+      >
+        <div>
+          <img
+            src="/assets/images/Services3.png"
+            alt=""
+            class="img-fluid pb-3"
+            style="width: 60px"
+          />
+        </div>
+        <span class="fw-bold">FREE AND FAST DELIVERY</span>
+        <p style="font-size: 12px">Free delivery for all orders over $140</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <!-- line -->
+ <div class="container">
+  <hr class="line bg-dark" />
+</div>
+
+
+
+<script>
+  $('#myCarousel').carousel({
+    interval: 3000,
+ })
+</script>
+
+
+<script>
+  const productContainers = [
+    ...document.querySelectorAll(".product-container"),
+  ];
+  const nxtBtn = [...document.querySelectorAll(".nxt-btn")];
+  const preBtn = [...document.querySelectorAll(".pre-btn")];
+
+  productContainers.forEach((item, i) => {
+    let containerDimensions = item.getBoundingClientRect();
+    let containerWidth = containerDimensions.width;
+
+    nxtBtn[i].addEventListener("click", () => {
+      item.scrollLeft += containerWidth;
+    });
+
+    preBtn[i].addEventListener("click", () => {
+      item.scrollLeft -= containerWidth;
+    });
+  });
+</script>
+
+
+<script>
+  $('.owl-carousel').owlCarousel({
+    loop:true,
+    autoplay:true,
+    autoplayTimeout:1500,
+    margin:10,
+    nav:true,
+    autoplayHoverPause:true,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:3
+        },
+        1000:{
+            items:5
+        }
+    }
+})
+</script>
+
+<%- include("../partials/foeter.ejs")%>

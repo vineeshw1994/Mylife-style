@@ -1,0 +1,172 @@
+<%- include('../layouts.ejs')%>
+
+
+<div class="container col-md-12" id="signup">
+  <div class="row">
+    <div class="col-md-6 ">
+      <img src="/assets/pictures/signup-pic.avif" alt="Picture" class="w-100" >
+    </div>
+    <div class="col-md-6">
+      <form action="/signup" method="post" id="form" class="w-100">
+        <h1 style="color: rgb(0,125,254);">Signup</h1>
+        <% if (locals.success) { %>
+        <div class="alert alert-success">
+          <strong><%= success %> </strong>
+        </div>
+        <% } %> 
+        <% if (locals.succ) { %>
+          <div class="alert alert-danger">
+            <strong><%= succ %> </strong>
+          </div>
+        <% } %> 
+        <% if (locals.exist) { %>
+        <div class="alert alert-danger">
+          <strong><%= exist %> </strong>
+        </div>
+        <% } %>
+    
+        <div class="input-group">
+          <label for="username">Name</label>
+          <input type="text" id="name" name="name" />
+          <div class="error text-danger" style="background-color: rgb(244, 241, 238); border-radius: 5px; font-size: 15px;" ></div>
+        </div>
+    
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="text" id="email" name="email" />
+          <div class="error text-danger" style="background-color: rgb(244, 241, 238); border-radius: 5px; font-size: 15px;" ></div>
+        </div>
+    
+        <div class="input-group">
+          <label for="mobile">Mobile</label>
+          <input type="number" id="mobile" name="mobile" />
+          <div class="error text-danger" style="background-color: rgb(244, 241, 238); border-radius: 5px; font-size: 15px;" ></div>
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" />
+          <div class="error text-danger" style="background-color: rgb(244, 241, 238); border-radius: 5px; font-size: 15px;" ></div>
+        </div>
+        <div class="input-group">
+          <label for="cpassword">Confirm Password</label>
+          <input type="password" id="cpassword" />
+          <div class="error text-danger" style="background-color: rgb(244, 241, 238); border-radius: 5px; font-size: 15px;" ></div>
+        </div>
+        <button type="submit">submit</button>
+    
+        <div class="text-center w-100">
+          Already have an account? <a href="/login">Login here</a>.
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const form = document.querySelector("#form");
+  const name = document.querySelector("#name");
+  const email = document.querySelector("#email");
+  const mobile = document.querySelector("#mobile");
+  const password = document.querySelector("#password");
+  const cpassword = document.querySelector("#cpassword");
+
+  form.addEventListener("submit", (e) => {
+    if (!validateInputs()) {
+      e.preventDefault();
+    }
+  });
+
+  function validateInputs() {
+    const nameVal = name.value.trim();
+    const emailVal = email.value.trim();
+    const mobileval = mobile.value.trim();
+    const passwordVal = password.value.trim();
+    const cpasswordVal = cpassword.value.trim();
+    let success = true;
+
+    if (nameVal === "") {
+      success = false;
+      setError(name, "name is required");
+    } else {
+      setSuccess(name);
+    }
+
+    if (emailVal === "") {
+      success = false;
+      setError(email, "Email is required");
+    } else if (!validateEmail(emailVal)) {
+      success = false;
+      setError(email, "Please enter a valid email");
+    } else {
+      setSuccess(email);
+    }
+
+    if (mobileval === "") {
+      success = false;
+      setError(mobile, "mobile number is required");
+    }
+    // else if(!validateMobile(mobileval)){
+    //     success = false;
+    //     setError(mobile,'Please enter a valid mobile number')
+    // }
+    else {
+      setSuccess(mobile);
+    }
+
+    if (passwordVal === "") {
+      success = false;
+      setError(password, "Password is required");
+    } else if (passwordVal.length < 8) {
+      success = false;
+      setError(password, "Password must be atleast 8 characters long");
+    } else {
+      setSuccess(password);
+    }
+
+    if (cpasswordVal === "") {
+      success = false;
+      setError(cpassword, "Confirm password is required");
+    } else if (cpasswordVal !== passwordVal) {
+      success = false;
+      setError(cpassword, "Password does not match");
+    } else if (cpasswordVal.length < 5) {
+      success = false;
+      setError(password, "Password must be atleast 5 characters long");
+    } else {
+      setSuccess(cpassword);
+    }
+
+    return success;
+  }
+  //element - password, msg- pwd is reqd
+  function setError(element, message) {
+    const inputGroup = element.parentElement;
+    const errorElement = inputGroup.querySelector(".error");
+
+    errorElement.innerText = message;
+    inputGroup.classList.add("error");
+    inputGroup.classList.remove("success");
+  }
+
+  function setSuccess(element) {
+    const inputGroup = element.parentElement;
+    const errorElement = inputGroup.querySelector(".error");
+
+    errorElement.innerText = "";
+    inputGroup.classList.add("success");
+    inputGroup.classList.remove("error");
+  }
+
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
+  //   const validateMobile = (mobile)=>{
+  //     return Number(mobile)
+  //     .match(/^[0]?[6789]\d{9}$/)
+  //   }
+</script>
