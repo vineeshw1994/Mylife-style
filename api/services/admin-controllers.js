@@ -336,57 +336,7 @@ const salesReport=async(req,res)=>{
     }
 }
  
-// const salesReportPdf=async(req,res)=>{
-//     try {
-        
-//         // Assuming 'orders' is the array of order details passed to the EJS template
-//         const order = await orderList.find();
-//         console.log("order>>",order)
-//         // Create the data for the PDF invoice
-//         const invoiceData = {
-//           currency: 'USD',
-//           taxNotation: 'vat',
-//           marginTop: 25,
-//           marginRight: 25,
-//           marginLeft: 25,
-//           marginBottom: 25,
-//           logo: 'https://www.example.com/logo.png', // Your logo URL
-//           background: 'https://www.example.com/background.png', // Background image URL
-//           sender: {
-//             // Sender information
-//           },
-//           client: {
-//             // Client information
-//           },
-//           invoiceNumber: 'INV-12345',
-//           invoiceDate: new Date().toISOString().slice(0, 10), // Current date in YYYY-MM-DD format
-//           products: [],
 
-//           bottomNotice: 'Thank you for your business!'
-//         };
-        
-//         invoiceData.products.push(order.map(detail => ({
-//            // product: detail.products.p_name,
-//             //price: detail.products.realPrice,
-//             payment: detail.payment.method,
-//             status: detail.status,
-//             orderId: detail._id.toString()
-//         })),)
-//         console.log("pdfBuffer>>",invoiceData)
-//         // Generate the PDF invoice
-//          const pdfBuffer = await easyinvoice.createInvoice(invoiceData);
-         
-        
-//         res.setHeader('Content-Type', 'application/pdf');
-//         res.setHeader('Content-Disposition', 'attachment; filename=SalesReport.pdf');
-//         res.send(pdfBuffer);
-        
-//     } catch (error) {
-//         console.log(error)
-//         res.status(500).send('Internal Server Error'+error);
-//     }
-   
-// }
 
 const login = (req, res) => {
     try {
@@ -545,30 +495,29 @@ const create_category = (req, res) => {
  
 } 
 const create_category_post = async (req, res) => {
-    try {
-        const {categoryName} = req.body
+   try {
+        const { categoryName, discription, isAvailable } = req.body; // Destructuring all required fields
+        console.log(categoryName);
 
-        const category = await categorycollection.findOne({categoryName:categoryName})
-        console.log(category);
-        if(category.categoryName === categoryName){
-            const admin = false
-            res.render('admin/category-create',{errmsg:'Category is already exist',admin})
-        }else{
-            const admin = false
+        const category = await categorycollection.findOne({ categoryName: categoryName });
+
+        if (!category) {
+            const admin = false;
             const data = {
-                categoryName: req.body.categoryName.trim(),
-                categoryDescription: req.body.description.trim(),
-                isavilable: req.body.isAvailable
-            }
-            await categorycollection.insertMany([data])
-            res.render('admin/category-create', { msg: 'category added sucessfully',admin })
+                categoryName: categoryName.trim(),
+                categoryDescription: discription.trim(), 
+                isavilable: isAvailable
+            };
+            await categorycollection.insertMany(data); 
+            res.render('admin/category-create', { msg: 'Category added successfully', admin });
+        } else {
+            const admin = false;
+            res.render('admin/category-create', { errmsg: 'Category already exists', admin });
         }
-       
-
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
+        res.status(500).send('Internal Server Error'); // Sending an error response to the client
     }
-}
 const edit_categories = async (req, res) => {
     try {
         const id = req.query.id
